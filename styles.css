@@ -10,4 +10,24 @@ body {
   overflow-x: hidden;
   outline: 1px solid black;
   padding: 20px;
+
+  /* add to container */
+  position: relative;
+}
+.bar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 20px;
+  height: 100%;
+  background: rgba(0, 0, 0, .3);
+  border-radius: 10px;
+}
+.handle {
+  top: 0;
+  right: 0;
+  background: rgba(0, 0, 0, .8);
+  width: 20px;
+  border-radius: 10px;
+  height: 40px;
 }
