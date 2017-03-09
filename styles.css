@@ -1,10 +1,17 @@
+* {
+  box-sizing: border-box;
+}
 body {
   background: gray;
 }
+.outer {
+  position: relative;
+  width: 300px;
+  margin: 50px auto;
+}
 .frame {
   background: white;
-  margin: 50px auto;
-  width: 300px;
+  width: 100%;
   height: 30vh;
   /* overflow-y: scroll; */
   overflow-y: hidden;
