@@ -1,3 +1,7 @@
+// handle scroll by handle
+// handle resize of window
+// handle click to page
+// no scroll bar if no need to scroll
 document.addEventListener('DOMContentLoaded', _ => {
   console.log('loaded')
 
