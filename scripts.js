@@ -117,7 +117,7 @@ document.addEventListener('DOMContentLoaded', _ => {
     const newScrollTop = calcFrameScrollTop(frame, deltaY)
     renderFrameScrollTop(frame, newScrollTop)
     const percent = calcFramePercentScroll(frame, content)
-    const newHandleTop = calcHandleTop(bar, percent)
+    const newHandleTop = calcHandleTop(bar, handle, percent)
     renderHandleTop(handle, newHandleTop)
   }
 
@@ -134,8 +134,13 @@ document.addEventListener('DOMContentLoaded', _ => {
     return frame.el.scrollTop / content.height
   }
 
-  function calcHandleTop(bar, percent) {
-    return bar.height * percent
+  function calcHandleTop(bar, handle, percent) {
+    const topByPercent = bar.height * percent
+    return topByPercent < 0
+      ? 0
+      : topByPercent > bar.height - handle.height
+        ? bar.height - handle.height
+        : topByPercent
   }
 
   function renderHandleTop(handle, top) {
