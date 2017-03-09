@@ -105,6 +105,7 @@ document.addEventListener('DOMContentLoaded', _ => {
   let deltaYSum = 0
   let ticking = false
   window.addWheelListener(frame.el, evt => {
+    evt.preventDefault()
     deltaYSum += evt.deltaY
 
     if (!ticking) {
