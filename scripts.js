@@ -122,4 +122,37 @@ document.addEventListener('DOMContentLoaded', _ => {
     return handle
   }
 
+  function parseTop(el) {
+    return el.style.top.replace(/^(\d+)px$/, '$1')
+  }
+
+  let isDrag = false
+  let handleDragPointOffset = 0
+  window.addEventListener('mousedown', evt => {
+    // console.log('evt', evt)
+    if (evt.target.id === 'handle') {
+      isDrag = true
+      handleDragPointOffset = evt.clientY - parseTop(evt.target)
+      console.log('drag start', handleDragPointOffset)
+    }
+    console.log('down')
+  })
+
+  window.addEventListener('mouseup', evt => {
+    isDrag = false
+    // console.log('up')
+  })
+
+  window.addEventListener('mousemove', evt => {
+    // TODO: hook up to requestAnimationFrame
+    console.log('evt')
+    if (isDrag) {
+      renderHandleTop(handle, evt.clientY - handleDragPointOffset)
+      // render handle at
+      // console.log('dragging')
+    } else {
+      // console.log('just moving')
+    }
+  })
+
 })
