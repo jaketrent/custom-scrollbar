@@ -175,11 +175,18 @@ document.addEventListener('DOMContentLoaded', _ => {
     if (!isOnHandle) {
       const isPageUp = evt.clientY < handleTop
       const isPageDown = evt.clientY > handleBottom
-      if (isPageUp) {
-        console.log('up')
-      } else if (isPageDown) {
-        console.log('down')
-      }
+      const getNewTop = isPageUp
+        ? handle => parseTop(handle.el) - handle.height
+        : isPageDown
+          ? handle => parseTop(handle.el) + handle.height
+          : handle => parseTop(handle.el)
+
+      const newHandleTop = calcSafeHandleTop(bar, handle, getNewTop(handle))
+      renderHandleTop(handle, newHandleTop)        
+
+      const percent = calcPercentHandleDownBar(handle, bar)
+      const frameScrollTop = content.height * percent
+      renderFrameScrollTop(frame, frameScrollTop)
     }
   })
 
