@@ -122,7 +122,7 @@ document.addEventListener('DOMContentLoaded', _ => {
   }
 
   function parseTop(el) {
-    return el.style.top.replace(/^(\d+)px$/, '$1')
+    return parseInt(el.style.top || 0, 10)
   }
 
   function calcSafeHandleTop(bar, handle, top) {
@@ -162,9 +162,24 @@ document.addEventListener('DOMContentLoaded', _ => {
 
   window.addEventListener('mousemove', evt => {
     // TODO: hook up to requestAnimationFrame
-    console.log('evt')
     if (isDrag) {
       drag(frame, content, handle, bar, evt.clientY, handleDragPointOffset)
+    }
+  })
+
+  bar.el.addEventListener('click', evt => {
+    const handleTop = parseTop(handle.el)
+    const handleBottom = handle.height + handleTop
+    
+    const isOnHandle = evt.clientY > handleTop && evt.clientY < handleBottom
+    if (!isOnHandle) {
+      const isPageUp = evt.clientY < handleTop
+      const isPageDown = evt.clientY > handleBottom
+      if (isPageUp) {
+        console.log('up')
+      } else if (isPageDown) {
+        console.log('down')
+      }
     }
   })
 
