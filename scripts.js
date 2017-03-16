@@ -1,5 +1,4 @@
 // handle resize of window
-// handle click to page
 // no scroll bar if no need to scroll
 document.addEventListener('DOMContentLoaded', _ => {
   console.log('loaded')
@@ -190,4 +189,14 @@ document.addEventListener('DOMContentLoaded', _ => {
     }
   })
 
+  window.addEventListener('resize', handleWindowResize)
+
+  function handleWindowResize() {
+    frame.height = frame.el.offsetHeight
+    content.height = content.el.offsetHeight
+    bar.height = bar.el.offsetHeight
+    handle.height = handle.el.offsetHeight
+    // TODO: if we care, handle percent positioning of the handle on the bar when resized
+    renderHeight(handle, calcHandleHeight(frame.height, content.height, bar.height))
+  }
 })
