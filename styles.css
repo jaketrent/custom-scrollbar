@@ -18,6 +18,10 @@ body {
   height: 100vh;
   overflow: hidden;
   position: relative;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 .content {
   padding: 20px;
