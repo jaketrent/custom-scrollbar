@@ -36,6 +36,9 @@ body {
 .outer:hover .bar {
   visibility: visible;
 }
+.outer .bar.bar--disabled {
+  visibility: hidden;
+}
 .bar-inner {
   position: absolute;
   top: 0;

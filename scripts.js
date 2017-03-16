@@ -1,4 +1,3 @@
-// handle resize of window
 // no scroll bar if no need to scroll
 document.addEventListener('DOMContentLoaded', _ => {
   console.log('loaded')
@@ -20,6 +19,7 @@ document.addEventListener('DOMContentLoaded', _ => {
     height: document.querySelector('.handle').offsetHeight,
   }
 
+
   function calcHandleHeight(frameHeight, contentHeight, barHeight) {
     const percentContentVisible = frameHeight / contentHeight
     const newHeight = Math.floor(percentContentVisible * barHeight)
@@ -32,7 +32,16 @@ document.addEventListener('DOMContentLoaded', _ => {
     return widget
   }
 
+  function toggleScrollbar() {
+    if (frame.height >= content.height) {
+      bar.el.classList.add('bar--disabled')
+    } else {
+      bar.el.classList.remove('bar--disabled')
+    }
+  }
+
   renderHeight(handle, calcHandleHeight(frame.height, content.height, bar.height))
+  toggleScrollbar()
 
   console.log('frame height', frame.height)
   console.log('content height', content.height)
@@ -189,8 +198,6 @@ document.addEventListener('DOMContentLoaded', _ => {
     }
   })
 
-  window.addEventListener('resize', handleWindowResize)
-
   function handleWindowResize() {
     frame.height = frame.el.offsetHeight
     content.height = content.el.offsetHeight
@@ -198,5 +205,8 @@ document.addEventListener('DOMContentLoaded', _ => {
     handle.height = handle.el.offsetHeight
     // TODO: if we care, handle percent positioning of the handle on the bar when resized
     renderHeight(handle, calcHandleHeight(frame.height, content.height, bar.height))
+    toggleScrollbar()  
   }
+
+  window.addEventListener('resize', handleWindowResize)
 })
