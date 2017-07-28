@@ -94,6 +94,35 @@ document.addEventListener('DOMContentLoaded', _ => {
     ticking = true
   })
 
+  let touchMoving = false
+  let touchMoveFrameScrollTopStart = frame.el.scrollTop
+  let touchMoveClientYStart = 0
+  frame.el.addEventListener('touchmove', evt => {
+    evt.preventDefault()
+    const clientY = evt.touches[0].clientY
+
+    if (!touchMoving) {
+      touchMoveFrameScrollTopStart = frame.el.scrollTop
+      touchMoveClientYStart = clientY
+      touchMoving = true
+    }
+
+    const touchMoveClientYDiff = touchMoveClientYStart - clientY
+    const newFrameScrollTop = touchMoveFrameScrollTopStart + touchMoveClientYDiff
+
+    renderFrameScrollTop(frame, newFrameScrollTop)
+
+    const percent = calcFramePercentScroll(frame, content)
+    const newHandleTop = calcHandleTop(bar, handle, percent)
+    renderHandleTop(handle, newHandleTop)
+  })
+  frame.el.addEventListener('touchend', evt => {
+    touchMoving = false
+  })
+  frame.el.addEventListener('touchcancel', evt => {
+    touchMoving = false
+  })
+
   function scroll(frame, content, handle, bar, deltaY) {
     const newScrollTop = calcFrameScrollTop(frame, deltaY)
     renderFrameScrollTop(frame, newScrollTop)
