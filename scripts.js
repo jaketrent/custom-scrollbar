@@ -175,10 +175,12 @@ document.addEventListener('DOMContentLoaded', _ => {
     }
   })
 
-  bar.el.addEventListener('click', evt => {
+  function handleBarClick(evt) {
+    evt.stopPropagation()
+    evt.preventDefault()
     const handleTop = parseTop(handle.el)
     const handleBottom = handle.height + handleTop
-    
+
     const isOnHandle = evt.clientY > handleTop && evt.clientY < handleBottom
     if (!isOnHandle) {
       const isPageUp = evt.clientY < handleTop
@@ -190,13 +192,16 @@ document.addEventListener('DOMContentLoaded', _ => {
           : handle => parseTop(handle.el)
 
       const newHandleTop = calcSafeHandleTop(bar, handle, getNewTop(handle))
-      renderHandleTop(handle, newHandleTop)        
+      renderHandleTop(handle, newHandleTop)
 
       const percent = calcPercentHandleDownBar(handle, bar)
       const frameScrollTop = content.height * percent
       renderFrameScrollTop(frame, frameScrollTop)
     }
-  })
+  }
+
+  bar.el.addEventListener('touchstart', handleBarClick)
+  bar.el.addEventListener('click', handleBarClick)
 
   function handleWindowResize() {
     frame.height = frame.el.offsetHeight
